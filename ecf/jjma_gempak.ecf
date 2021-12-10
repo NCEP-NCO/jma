@@ -1,0 +1,37 @@
+#PBS -N jma_gempak_%CYC%
+#PBS -j oe
+#PBS -S /bin/bash
+#PBS -q %QUEUE%
+#PBS -A %PROJ%-%PROJENVIR%
+#PBS -l walltime=00:30:00
+#PBS -l place=shared,select=1:ncpus=1:mem=500MB
+#PBS -l debug=true
+model=jma
+
+%include <head.h>
+%include <envir-p1.h>
+export cyc=%CYC%
+
+export envir=%ENVIR%
+
+module load intel/$intel_ver
+module load gempak/$gempak_ver
+module list
+
+${HOMEjma}/jobs/JJMA_GEMPAK
+
+%include <tail.h>
+%manual
+################################################################################
+TASKSCRIPT DOCUMENTATION BLOCK
+TASKSCRIPT:     jjma_gempak.ecf
+
+PURPOSE:  To execute the job that creates JMA GEMPAK output files
+################################################################################
+######################################################################
+# Job specific troubleshooting instructions:
+#  see generic troubleshoot manual page
+#
+######################################################################
+%end
+~

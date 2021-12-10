@@ -1,0 +1,42 @@
+#!/bin/sh
+
+########################################
+# Runs JMA GEMPAK Processing
+########################################
+
+set -xa
+export PS4='+ $SECONDS + '
+date
+
+export DATA=${DATA:-${DATAROOT:?}/${jobid:?}}
+mkdir -p $DATA
+cd $DATA
+
+export NET=jma
+export RUN=jma
+export cycle=t${cyc}z 
+setpdy.sh
+. ./PDY
+
+export DCOMIN=${DCOMROOT:?}/${PDY}/wgrbbul
+export COMOUT=${COMOUT:-$(compath.py -o ${NET}/${jma_ver}/${RUN}.${PDY})/gempak}
+
+if [ ! -f $COMOUT ] ; then
+  mkdir -p -m 775 $COMOUT
+fi
+ 
+env
+
+########################################################
+# Execute the script.
+${HOMEjma}/scripts/exnawips_jma.sh
+########################################################
+
+###################################
+# Remove temp directory
+###################################
+if [ "$KEEPDATA" != "YES" ] ; then
+  rm -rf $DATA
+fi
+
+date

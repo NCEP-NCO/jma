@@ -1,0 +1,14 @@
+suite prod
+  family primary
+    family 00
+      family jma
+        edit PACKAGEHOME '/lfs/h1/ops/%ENVIR%/packages/jma.%jma_ver%'
+        edit PROJ 'NCO'
+        family v1.1
+          task jjma_gempak
+            time 03:45
+        endfamily
+      endfamily
+    endfamily
+  endfamily
+endsuite 
